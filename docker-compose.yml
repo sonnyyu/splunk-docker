@@ -1,0 +1,28 @@
+version: '3'
+services:
+  splunk:
+    hostname: splunkenterprise
+    image: splunk/splunk:latest
+    environment:
+      - SPLUNK_ENABLE_LISTEN=9997
+      - SPLUNK_START_ARGS=--accept-license --no-prompt --answer-yes
+      - SPLUNK_USERNAME=admin
+      - SPLUNK_PASSWORD=password
+    restart: always
+    networks:
+      - splunk
+    volumes:
+      - opt_splunk_etc:/opt/splunk/etc
+      - opt_splunk_var:/opt/splunk/var
+    ports:
+      - "8000:8000"
+      - "9997:9997"
+      - "8088:8088"
+      - "1514:1514"
+      - "514:514/udp"
+    restart: always
+volumes:
+  opt_splunk_etc:
+  opt_splunk_var:
+networks:
+  splunk:
